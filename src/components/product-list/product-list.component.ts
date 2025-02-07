@@ -3,11 +3,15 @@ import { ProductService } from "../../services/product/product.service";
 import { Product } from "../../interfaces/product.interface";
 import { ProductFilterComponent } from "../product-filter/product-filter.component";
 import { SearchParameters } from "../../interfaces/search-parameters.interface";
+import { ProductItemComponent } from "../product-item/product-item.component";
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
-  selector: 'product-list',
+  selector: 'app-product-list',
   imports: [
-    ProductFilterComponent
+    ProductFilterComponent,
+    ProductItemComponent,
+    MatGridListModule
   ],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss'

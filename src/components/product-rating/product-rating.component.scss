@@ -1,0 +1,26 @@
+.rating-badge {
+    border-radius: 50%;
+    letter-spacing: -0.5px;
+    height: 2rem;
+    width: 2rem;
+    line-height: 2rem;
+    text-align: center;
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1rem;
+
+    &.awful {
+        background-color: red;
+        color: white
+    }
+
+    &.average {
+        background-color: orange;
+        color: black
+    }
+
+    &.great {
+        background-color: green;
+        color: white
+    }
+}

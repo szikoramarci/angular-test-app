@@ -1,1 +1,10 @@
-<product-filter (searchParametersChanged)="updateSearchParameters($event)"></product-filter>
+<app-product-filter
+  (searchParametersChanged)="updateSearchParameters($event)"
+></app-product-filter>
+
+
+<div class="product-container">
+    @for (product of products; track product.id) {
+        <app-product-item [product]="product"></app-product-item>
+    }
+</div>

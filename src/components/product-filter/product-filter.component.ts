@@ -1,16 +1,14 @@
 import { AfterViewInit, Component, ElementRef, OnInit, output, ViewChild } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { MatCardModule } from '@angular/material/card';
 import { ProductService } from '../../services/product/product.service';
 import { Category } from '../../interfaces/category.interfaces';
 import { SearchParameters } from '../../interfaces/search-parameters.interface';
 import { debounceTime, fromEvent, map } from 'rxjs';
 
 @Component({
-  selector: 'product-filter',
+  selector: 'app-product-filter',
   imports: [
-    MatCardModule,
     MatInputModule,
     MatSelectModule
   ],
@@ -20,8 +18,8 @@ import { debounceTime, fromEvent, map } from 'rxjs';
 export class ProductFilterComponent implements OnInit, AfterViewInit {
 
     categories: Category[] = []
-    selectedCagegory!: Category;
-    filterKeyword: string = '';
+    selectedCagegory: Category | null = null
+    filterKeyword = '';
  
     searchParametersChanged = output<SearchParameters>();
 
@@ -51,17 +49,9 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
           });
     }
 
-    updateFilterKeyword(filterKeyword: string) {
-        console.log(filterKeyword);
-        this.filterKeyword = filterKeyword;
-    }
-
     updateSelectedCategory(changeEvent: MatSelectChange) {
-        const selectedCategory = this.categories.find((category) => category.slug === changeEvent.value)
-        if (selectedCategory) {
-            this.selectedCagegory = selectedCategory;
-            this.updateSearchParameters()
-        }        
+        this.selectedCagegory =  this.categories.find((category) => category.slug === changeEvent.value) || null        
+        this.updateSearchParameters()
     }
 
     updateSearchParameters() {

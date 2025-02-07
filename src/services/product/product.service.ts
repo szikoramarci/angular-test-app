@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { map, Observable } from "rxjs";
 import { Product } from "../../interfaces/product.interface";
 import { Category } from "../../interfaces/category.interfaces";
 import { SearchParameters } from "../../interfaces/search-parameters.interface";
@@ -18,7 +18,9 @@ export class ProductService {
     }
 
     getProducts(searchParameters: SearchParameters): Observable<Product[]> {
-        return this.http.get<Product[]>(this.baseProductUrl);
+        return this.http.get<{ products: Product[] }>(this.baseProductUrl).pipe(
+            map(response => response.products)
+        )
     }
 
 }

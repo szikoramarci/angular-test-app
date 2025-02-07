@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 
 @Component({
-  selector: 'favorites',
+  selector: 'app-favorites',
   imports: [],
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.scss'
