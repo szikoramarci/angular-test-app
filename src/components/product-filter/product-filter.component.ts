@@ -3,7 +3,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { ProductService } from '../../services/product/product.service';
 import { Category } from '../../interfaces/category.interfaces';
-import { debounceTime, fromEvent, map } from 'rxjs';
+import { debounceTime, filter, fromEvent, map } from 'rxjs';
 
 @Component({
   selector: 'app-product-filter',
@@ -38,10 +38,13 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
     }
 
     initFilterKeywordInputListener() {
-        fromEvent(this.filterKeywordInput.nativeElement, 'input')
+        fromEvent<Event>(this.filterKeywordInput.nativeElement, 'input')
           .pipe(
             debounceTime(250),
-            map((event: any) => event.target.value)
+            filter((event): event is InputEvent & { target: HTMLInputElement } => 
+              event.target instanceof HTMLInputElement
+            ),
+            map(event => event.target.value)
           )
           .subscribe((value: string) => {
             this.filterKeyword = value
