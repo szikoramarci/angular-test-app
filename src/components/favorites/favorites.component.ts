@@ -1,11 +1,10 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
+import { ProductListComponent } from '../product-list/product-list.component';
 
 @Component({
   selector: 'app-favorites',
-  imports: [],
+  imports: [ProductListComponent],
   templateUrl: './favorites.component.html',
-  styleUrl: './favorites.component.scss'
+  styleUrl: './favorites.component.scss',
 })
-export class FavoritesComponent {
-  
-}
+export class FavoritesComponent {}

@@ -3,7 +3,14 @@
   (filterKeywordChanged)="updateFilterKeyword($event)"
 ></app-product-filter>
 
-<h1>Products ({{ getFilteredProducts().length }})</h1>
+<h1>
+  @if (favorites()) {
+    Favorites
+  } @else {
+    Products
+  }
+  ({{ getFilteredProducts().length }})
+</h1>
 
 <div class="product-container">
     @for (product of getFilteredProducts(); track product.id) {

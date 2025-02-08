@@ -18,7 +18,9 @@ export class ProductService {
 
     getProducts(category: Category | null): Observable<Product[]> {
         const productURL = category ? category.url : this.baseProductUrl;
-        return this.http.get<{ products: Product[] }>(productURL).pipe(
+        const selectFields = "title,price,description,stock,rating,thumbnail,images"
+        const finalURL = `${productURL}?select=${selectFields}`;
+        return this.http.get<{ products: Product[] }>(finalURL).pipe(
             map(response => response.products)
         )
     }
