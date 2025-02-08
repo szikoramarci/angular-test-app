@@ -8,5 +8,11 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Close</button>
-  <button mat-button>Set to Favorites</button>
+  <button mat-button (click)="toggleFavorite(data.product)">
+    @if(isProductFavourite) {
+      Remove from favorites
+    } @else {
+      Add to favorites
+    }
+  </button>
 </mat-dialog-actions>

@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import { ProductService } from "../../services/product/product.service";
 import { Product } from "../../interfaces/product.interface";
 import { ProductFilterComponent } from "../product-filter/product-filter.component";
@@ -22,7 +22,7 @@ export class ProductListComponent implements OnInit {
     
     products: Product[] = []   
     selectedCategory: Category | null = null
-    filterKeyword: string = ''   
+    filterKeyword = ''   
     
     readonly productDialog = inject(MatDialog);
     
@@ -59,12 +59,8 @@ export class ProductListComponent implements OnInit {
     }    
 
     openProductDialog(product: Product) {
-        const dialogRef = this.productDialog.open(ProductDialogComponent, { data: {
+        this.productDialog.open(ProductDialogComponent, { data: {
             product: product
-        } });
-
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-        });
+        }});
     }
 }
