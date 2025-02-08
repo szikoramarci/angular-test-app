@@ -16,7 +16,7 @@ import { FavoriteService } from '../../services/favorite/favorite.service';
   styleUrl: './product-list.component.scss',
 })
 export class ProductListComponent implements OnInit {
-  favorites = input<boolean>(false);
+  favoritesMode = input<boolean>(false);
   products: Product[] = [];
   selectedCategory: Category | null = null;
   filterKeyword = '';
@@ -29,7 +29,6 @@ export class ProductListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.favorites());
     this.searchProducts();
   }
 
@@ -45,7 +44,7 @@ export class ProductListComponent implements OnInit {
   }
 
   filterProductByFavourite(product: Product) {
-    if (!this.favorites()) return true;
+    if (!this.favoritesMode()) return true;
 
     return this.favorite.isProductFavorite(product.id);
   }

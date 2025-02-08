@@ -1,0 +1,22 @@
+@use '@angular/material' as mat;
+
+:host {
+    display: flex;
+    gap: 1rem;
+
+    @include mat.form-field-overrides((
+        outlined-label-text-color: var(--mdc-elevated-card-container-color, var(--mat-sys-surface-container-low)),
+        outlined-hover-label-text-color: var(--mdc-elevated-card-container-color, var(--mat-sys-surface-container-low)),
+        outlined-hover-outline-color: var(--mdc-elevated-card-container-color, var(--mat-sys-surface-container-low)),
+        outlined-focus-label-text-color: var(--mdc-elevated-card-container-color, var(--mat-sys-surface-container-low)),
+        outlined-focus-outline-color: var(--mdc-elevated-card-container-color, var(--mat-sys-surface-container-low)),
+        outlined-input-text-color: var(--mdc-elevated-card-container-color, var(--mat-sys-surface-container-low)),
+        outlined-input-text-placeholder-color: #999
+    ));
+
+    @include mat.select-overrides((
+        enabled-arrow-color: var(--mdc-elevated-card-container-color, var(--mat-sys-surface-container-low)),
+        focused-arrow-color: var(--mdc-elevated-card-container-color, var(--mat-sys-surface-container-low)),
+        enabled-trigger-text-color: var(--mdc-elevated-card-container-color, var(--mat-sys-surface-container-low)),
+    ));
+}

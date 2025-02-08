@@ -1,18 +1,14 @@
-<form>
-  <div class="example-form-fields">
-    <mat-form-field appearance="outline">
-      <mat-label>Filter by keyword</mat-label>
-      <input matInput placeholder="Type your keyword" #filterKeywordInput />
-    </mat-form-field>
+<mat-form-field appearance="outline">
+  <mat-label>Filter by keyword</mat-label>
+  <input matInput placeholder="Type your keyword" #filterKeywordInput />
+</mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Filter by category</mat-label>
-      <mat-select required (selectionChange)="updateSelectedCategory($event)">
-        <mat-option value>All categories</mat-option>
-        @for (category of categories; track category.slug) {
-        <mat-option value="{{ category.slug }}">{{ category.name }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-  </div>
-</form>
+<mat-form-field appearance="outline">
+  <mat-label>Filter by category</mat-label>
+  <mat-select required (selectionChange)="updateSelectedCategory($event)">
+    <mat-option value>All categories</mat-option>
+    @for (category of categories; track category.slug) {
+    <mat-option value="{{ category.slug }}">{{ category.name }}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
