@@ -3,7 +3,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { ProductService } from '../../services/product/product.service';
 import { Category } from '../../interfaces/category.interfaces';
-import { SearchParameters } from '../../interfaces/search-parameters.interface';
 import { debounceTime, fromEvent, map } from 'rxjs';
 
 @Component({
@@ -21,7 +20,8 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
     selectedCagegory: Category | null = null
     filterKeyword = '';
  
-    searchParametersChanged = output<SearchParameters>();
+    selectedCategoryChanged = output<Category | null>();
+    filterKeywordChanged = output<string>();
 
     @ViewChild('filterKeywordInput') filterKeywordInput!: ElementRef;
 
@@ -45,19 +45,12 @@ export class ProductFilterComponent implements OnInit, AfterViewInit {
           )
           .subscribe((value: string) => {
             this.filterKeyword = value
-            this.updateSearchParameters()
+            this.filterKeywordChanged.emit(value)
           });
     }
 
     updateSelectedCategory(changeEvent: MatSelectChange) {
         this.selectedCagegory =  this.categories.find((category) => category.slug === changeEvent.value) || null        
-        this.updateSearchParameters()
-    }
-
-    updateSearchParameters() {
-        this.searchParametersChanged.emit({
-            selectedCategory: this.selectedCagegory,
-            filterKeyword: this.filterKeyword
-        });
+        this.selectedCategoryChanged.emit(this.selectedCagegory)
     }
 }

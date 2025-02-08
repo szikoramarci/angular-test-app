@@ -3,7 +3,6 @@ import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { Product } from "../../interfaces/product.interface";
 import { Category } from "../../interfaces/category.interfaces";
-import { SearchParameters } from "../../interfaces/search-parameters.interface";
 
 @Injectable({
     providedIn: 'root',
@@ -17,8 +16,9 @@ export class ProductService {
         return this.http.get<Category[]>(this.baseProductUrl + '/categories');
     }
 
-    getProducts(searchParameters: SearchParameters): Observable<Product[]> {
-        return this.http.get<{ products: Product[] }>(this.baseProductUrl).pipe(
+    getProducts(category: Category | null): Observable<Product[]> {
+        const productURL = category ? category.url : this.baseProductUrl;
+        return this.http.get<{ products: Product[] }>(productURL).pipe(
             map(response => response.products)
         )
     }

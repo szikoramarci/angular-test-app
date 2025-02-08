@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>{{ data.product.title }}</h2>
+<mat-dialog-content class="mat-typography"> 
+  <p>Price: {{ data.product.price | currency }} | Stock: {{ data.product.stock }}</p>
+  <p>{{ data.product.description }}</p>  
+  @for (image of data.product.images; track image) {
+    <img src="{{ image }}" alt="{{ data.product.title }}" />
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+  <button mat-button>Set to Favorites</button>
+</mat-dialog-actions>

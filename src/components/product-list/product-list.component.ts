@@ -1,10 +1,12 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, computed, inject, OnInit } from "@angular/core";
 import { ProductService } from "../../services/product/product.service";
 import { Product } from "../../interfaces/product.interface";
 import { ProductFilterComponent } from "../product-filter/product-filter.component";
-import { SearchParameters } from "../../interfaces/search-parameters.interface";
 import { ProductItemComponent } from "../product-item/product-item.component";
 import { MatGridListModule } from '@angular/material/grid-list';
+import { Category } from "../../interfaces/category.interfaces";
+import { MatDialog } from '@angular/material/dialog';
+import { ProductDialogComponent } from "../product-dialog/product-dialog.component";
 
 @Component({
   selector: 'app-product-list',
@@ -18,11 +20,11 @@ import { MatGridListModule } from '@angular/material/grid-list';
 })
 export class ProductListComponent implements OnInit {
     
-    products: Product[] = [];
-    searchParameters: SearchParameters = {
-        selectedCategory: null,
-        filterKeyword: ''
-    }
+    products: Product[] = []   
+    selectedCategory: Category | null = null
+    filterKeyword: string = ''   
+    
+    readonly productDialog = inject(MatDialog);
     
     constructor(private product: ProductService) {}
 
@@ -30,15 +32,39 @@ export class ProductListComponent implements OnInit {
         this.searchProducts();
     }
 
+    getFilteredProducts(): Product[] {
+        return this.products.filter((product) => this.filterProduct(product));
+    }
+
+    filterProduct(product: Product) {               
+        const filter = this.filterKeyword.toLocaleUpperCase()        
+        if (filter.length === 0) return true;
+
+        return product.title.toLocaleUpperCase().includes(filter)
+    }
+
     searchProducts() {
-        this.product.getProducts(this.searchParameters).subscribe((products) => {
+        this.product.getProducts(this.selectedCategory).subscribe((products) => {
             this.products = products;
         });
     }
 
-    updateSearchParameters(searchParameters: SearchParameters) {  
-        console.log(searchParameters);  
-        this.searchParameters = searchParameters;
+    updateSelectedCategory(selectedCategory: Category | null) {  
+        this.selectedCategory = selectedCategory;        
         this.searchProducts();
+    }
+
+    updateFilterKeyword(filterKeyword: string) {  
+        this.filterKeyword = filterKeyword;                
+    }    
+
+    openProductDialog(product: Product) {
+        const dialogRef = this.productDialog.open(ProductDialogComponent, { data: {
+            product: product
+        } });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
     }
 }

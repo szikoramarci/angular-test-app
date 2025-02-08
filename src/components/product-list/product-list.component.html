@@ -1,10 +1,12 @@
 <app-product-filter
-  (searchParametersChanged)="updateSearchParameters($event)"
+  (selectedCategoryChanged)="updateSelectedCategory($event)"
+  (filterKeywordChanged)="updateFilterKeyword($event)"
 ></app-product-filter>
 
+<h1>Products ({{ getFilteredProducts().length }})</h1>
 
 <div class="product-container">
-    @for (product of products; track product.id) {
-        <app-product-item [product]="product"></app-product-item>
+    @for (product of getFilteredProducts(); track product.id) {
+        <app-product-item (click)="openProductDialog(product)" [product]="product"></app-product-item>
     }
 </div>
